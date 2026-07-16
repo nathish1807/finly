@@ -10,7 +10,6 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const budgetRoutes = require("./routes/budgetRoutes");
-const otpRoutes = require("./routes/otpRoutes");
 const app = express();
 
 // Connect Database
@@ -23,7 +22,6 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/otp", otpRoutes);
 app.use("/api/accounts", accountRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/dashboard", dashboardRoutes);
