@@ -148,18 +148,29 @@ exports.forgotPassword = async (req, res) => {
 
     console.log("OTP Saved");
 
-   console.log("Before Mail");
+   try {
+  const info = await Promise.race([
+    transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Finly Password Reset OTP",
+      text: `Your OTP is ${otp}`,
+    }),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Mail Timeout")), 10000)
+    ),
+  ]);
 
-const info = await transporter.sendMail({
-  from: process.env.EMAIL_USER,
-  to: email,
-  subject: "Finly Password Reset OTP",
-  text: `Your OTP is ${otp}`,
-});
+  console.log("Mail Sent:", info.messageId);
 
-console.log("After Mail");
-console.log(info);
+} catch (err) {
+  console.log("MAIL ERROR:", err);
 
+  return res.status(500).json({
+    success: false,
+    message: err.message,
+  });
+}
     console.log("Mail Sent");
 
     return res.status(200).json({
