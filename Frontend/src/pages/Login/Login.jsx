@@ -55,7 +55,7 @@ export default function Login() {
     } catch (err) {
       // Placeholder error message — real backend will return specific error codes.
 setServerError(
-  err.response?.data?.message || "Something went wrong"
+  err.response?.data?.message || "Wrong Credentials"
 );
     } finally {
       setIsLoading(false);
@@ -68,7 +68,7 @@ setServerError(
         <Logo />
       </div>
 
-      <h1 className="text-2xl font-bold text-ink-900 sm:text-3xl">Welcome back</h1>
+      <h1 className="text-2xl font-bold text-ink-900 sm:text-3xl">Welcome</h1>
       <p className="mt-2 text-sm text-ink-500">
         Log in to keep track of your income, expenses and budgets.
       </p>

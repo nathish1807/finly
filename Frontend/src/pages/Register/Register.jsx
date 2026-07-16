@@ -33,7 +33,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState("");
-
+const [isSuccess, setIsSuccess] = useState(false);
   const strength = usePasswordStrength(form.password);
 
   const handleChange = (field) => (e) => {
@@ -64,7 +64,7 @@ export default function Register() {
     if (!form.confirmPassword) {
       nextErrors.confirmPassword = "Please confirm your password.";
     } else if (form.confirmPassword !== form.password) {
-      nextErrors.confirmPassword = "Password do not match.";
+      nextErrors.confirmPassword = "Passwords do not match.";
     }
 
     if (!form.bankName) {
@@ -104,9 +104,10 @@ const handleSubmit = async (e) => {
       bankName: form.bankName,
     });
 
+
     console.log("SUCCESS:", res);
 
-    navigate(ROUTES.DASHBOARD);
+    setIsSuccess(true);
   } catch (err) {
     console.log(err);
 
@@ -119,6 +120,33 @@ const handleSubmit = async (e) => {
     setIsLoading(false);
   }
 };
+
+if (isSuccess) {
+  return (
+    <AuthLayout>
+      <div className="flex flex-col items-center text-center">
+        <Logo />
+
+        <div className="mt-8 w-full rounded-2xl border border-green-200 bg-green-50 p-8">
+          <h2 className="text-3xl font-bold text-green-700">
+            🎉 Account Created Successfully!
+          </h2>
+
+          <p className="mt-3 text-gray-600">
+            Your Finly account has been created successfully.
+          </p>
+
+          <Button
+            className="mt-6"
+            onClick={() => navigate(ROUTES.LOGIN)}
+          >
+            Go to Login Page
+          </Button>
+        </div>
+      </div>
+    </AuthLayout>
+  );
+}
 
   return (
     <AuthLayout>

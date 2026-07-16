@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://finly-ufsb.onrender.com/api",
+  baseURL: "https://finly-backend-nybo.onrender.com/api",
 });
 
 // Automatically attach JWT token
