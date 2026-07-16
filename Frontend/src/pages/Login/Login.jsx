@@ -127,8 +127,8 @@ setServerError(
             Remember me
           </label>
           <Link
-            to="#"
-            className="font-medium text-brand-600 transition-colors hover:text-brand-700"
+            to="/forgot-password"
+            className="font-medium text-brand-600"
           >
             Forgot password?
           </Link>

@@ -8,11 +8,12 @@ import {
 import MainLayout from "../../layouts/MainLayout.jsx";
 import PageContainer from "../../components/PageContainer/PageContainer.jsx";
 import Card from "../../components/Card/Card.jsx";
-
+import useAutoLogout from "../../hooks/useAutoLogout.js";
 import { getDashboard } from "../../services/authService.js";
 import ExpenseChart from "../../components/Charts/ExpenseChart.jsx";
 
 export default function Dashboard() {
+  useAutoLogout();
   const [dashboard, setDashboard] = useState({
     totalIncome: 0,
     totalExpense: 0,

@@ -10,6 +10,8 @@ import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute.jsx";
 import { ROUTES } from "../utils/constants";
 import Reports from "../pages/Reports/Reports.jsx";
 import Profile from "../pages/Profile/Profile";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword.jsx";
+import ResetPassword from "../pages/ResetPassword/ResetPassword.jsx";
 
 export default function AppRoutes() {
   return (
@@ -17,7 +19,15 @@ export default function AppRoutes() {
       <Route path={ROUTES.LOGIN} element={<Login />} />
 
       <Route path={ROUTES.REGISTER} element={<Register />} />
+  <Route
+    path="/forgot-password"
+    element={<ForgotPassword />}
+  />
 
+  <Route
+    path="/reset-password"
+    element={<ResetPassword />}
+  />
       <Route
         path={ROUTES.DASHBOARD}
         element={

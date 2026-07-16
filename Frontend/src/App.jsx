@@ -1,10 +1,9 @@
 import AppRoutes from "./routes/AppRoutes.jsx";
+import useAutoLogout from "./hooks/useAutoLogout";
 
-/**
- * Root application component.
- * Kept intentionally thin — all route/layout logic lives in routes/AppRoutes.
- */
 function App() {
+  useAutoLogout();
+
   return <AppRoutes />;
 }
 

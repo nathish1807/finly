@@ -29,7 +29,25 @@ export const getDashboard = async () => {
   const response = await API.get("/dashboard");
   return response.data;
 };
+export const forgotPassword=async(email)=>{
 
+const response=await API.post("/auth/forgot-password",{
+
+email,
+
+});
+
+return response.data;
+
+};
+
+export const resetPassword=async(data)=>{
+
+const response=await API.post("/auth/reset-password",data);
+
+return response.data;
+
+};
 // Logout
 export const logout = () => {
   localStorage.removeItem("token");
