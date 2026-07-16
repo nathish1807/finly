@@ -13,6 +13,7 @@ const transporter = nodemailer.createTransport({
   socketTimeout: 10000,
 });
 
+
 module.exports = transporter;
 transporter.verify((err, success) => {
   if (err) {
@@ -21,3 +22,14 @@ transporter.verify((err, success) => {
     console.log("SMTP READY");
   }
 });
+
+transporter.verify((err, success) => {
+  if (err) {
+    console.log("MAIL ERROR:", err);
+  } else {
+    console.log("MAIL SERVER READY");
+  }
+});
+
+module.exports = transporter;
+
