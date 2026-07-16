@@ -148,12 +148,17 @@ exports.forgotPassword = async (req, res) => {
 
     console.log("OTP Saved");
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Finly Password Reset OTP",
-      text: `Your OTP is ${otp}`,
-    });
+   console.log("Before Mail");
+
+const info = await transporter.sendMail({
+  from: process.env.EMAIL_USER,
+  to: email,
+  subject: "Finly Password Reset OTP",
+  text: `Your OTP is ${otp}`,
+});
+
+console.log("After Mail");
+console.log(info);
 
     console.log("Mail Sent");
 
