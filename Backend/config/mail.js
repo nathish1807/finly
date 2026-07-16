@@ -8,11 +8,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.log("Mail Error:", error);
+transporter.verify((err, success) => {
+  if (err) {
+    console.log("MAIL ERROR:", err);
   } else {
-    console.log("Mail Server Ready");
+    console.log("MAIL SERVER READY");
   }
 });
 
