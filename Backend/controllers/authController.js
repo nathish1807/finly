@@ -170,6 +170,15 @@ console.log("RECIPIENT:", email);
 const info = await apiInstance.sendTransacEmail(sendSmtpEmail);
 console.log("BREVO RESPONSE:", info);
   console.log("Mail Sent:", info);
+  console.log("EMAIL_USER:", process.env.EMAIL_USER);
+  const info = await transporter.sendMail({
+  from: `"Finly" <${process.env.SENDER_EMAIL}>`,
+  to: email,
+  subject: "Finly Password Reset OTP",
+  text: `Your OTP is ${otp}`,
+});
+
+console.log(info.messageId);
 
 } catch (err) {
 
