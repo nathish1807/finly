@@ -112,16 +112,10 @@ console.log("Login User ID:", user._id);
 };
 
 exports.forgotPassword = async (req, res) => {
-  console.log("Forgot Password API Hit");
   try {
-    console.log("Forgot Password API Called");
-    console.log(req.body);
-
     const { email } = req.body;
 
     const user = await User.findOne({ email });
-
-    console.log("User:", user);
 
     if (!user) {
       return res.status(404).json({
@@ -136,8 +130,6 @@ exports.forgotPassword = async (req, res) => {
       specialChars: false,
     });
 
-    console.log("Generated OTP:", otp);
-
     await OTP.deleteMany({ email });
 
     await OTP.create({
@@ -145,53 +137,25 @@ exports.forgotPassword = async (req, res) => {
       otp,
     });
 
-    console.log("OTP Saved");
-try {
+    const sendSmtpEmail = new brevo.SendSmtpEmail();
 
-  const sendSmtpEmail = new brevo.SendSmtpEmail();
+    sendSmtpEmail.sender = {
+      name: "Finly",
+      email: process.env.SENDER_EMAIL,
+    };
 
-  sendSmtpEmail.sender = {
-    name: "Finly",
-    email: process.env.SENDER_EMAIL,
-  };
+    sendSmtpEmail.to = [
+      {
+        email: email,
+      },
+    ];
 
-  sendSmtpEmail.to = [
-    {
-      email: email,
-    },
-  ];
+    sendSmtpEmail.subject = "Finly Password Reset OTP";
+    sendSmtpEmail.textContent = `Your OTP is ${otp}`;
 
-  sendSmtpEmail.subject = "Finly Password Reset OTP";
+    const info = await apiInstance.sendTransacEmail(sendSmtpEmail);
 
-  sendSmtpEmail.textContent = `Your OTP is ${otp}`;
-console.log("BREVO API KEY:", process.env.BREVO_API_KEY ? "FOUND" : "NOT FOUND");
-console.log("SENDER:", process.env.SENDER_EMAIL);
-console.log("RECIPIENT:", email);
-const info = await apiInstance.sendTransacEmail(sendSmtpEmail);
-console.log("BREVO RESPONSE:", info);
-  console.log("Mail Sent:", info);
-  console.log("EMAIL_USER:", process.env.EMAIL_USER);
-  const info = await transporter.sendMail({
-  from: `"Finly" <${process.env.SENDER_EMAIL}>`,
-  to: email,
-  subject: "Finly Password Reset OTP",
-  text: `Your OTP is ${otp}`,
-});
-
-console.log(info.messageId);
-
-} catch (err) {
-
-  console.log("MAIL ERROR:", err);
-
-  return res.status(500).json({
-    success: false,
-    message: err.message,
-  });
-
-}
-   
-    console.log("Mail Sent");
+    console.log("BREVO RESPONSE:", info);
 
     return res.status(200).json({
       success: true,
@@ -207,6 +171,7 @@ console.log(info.messageId);
     });
   }
 };
+
 exports.resetPassword = async (req, res) => {
   try {
 
