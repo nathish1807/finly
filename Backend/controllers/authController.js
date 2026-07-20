@@ -164,9 +164,11 @@ try {
   sendSmtpEmail.subject = "Finly Password Reset OTP";
 
   sendSmtpEmail.textContent = `Your OTP is ${otp}`;
-
-  const info = await apiInstance.sendTransacEmail(sendSmtpEmail);
-
+console.log("BREVO API KEY:", process.env.BREVO_API_KEY ? "FOUND" : "NOT FOUND");
+console.log("SENDER:", process.env.SENDER_EMAIL);
+console.log("RECIPIENT:", email);
+const info = await apiInstance.sendTransacEmail(sendSmtpEmail);
+console.log("BREVO RESPONSE:", info);
   console.log("Mail Sent:", info);
 
 } catch (err) {
