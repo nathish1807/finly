@@ -5,8 +5,7 @@ const OTP = require("../models/OTP");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
-
-const transporter = require("../config/mail");
+const { apiInstance, brevo } = require("../config/mail");
 // =======================
 // Register User
 // =======================
@@ -148,24 +147,37 @@ exports.forgotPassword = async (req, res) => {
 
     console.log("OTP Saved");
 try {
-  console.log("EMAIL_USER:", process.env.EMAIL_USER);
-  const info = await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: "Finly Password Reset OTP",
-    text: `Your OTP is ${otp}`,
-  });
 
-  console.log("Mail Sent:", info.messageId);
+  const sendSmtpEmail = new brevo.SendSmtpEmail();
+
+  sendSmtpEmail.sender = {
+    name: "Finly",
+    email: process.env.SENDER_EMAIL,
+  };
+
+  sendSmtpEmail.to = [
+    {
+      email: email,
+    },
+  ];
+
+  sendSmtpEmail.subject = "Finly Password Reset OTP";
+
+  sendSmtpEmail.textContent = `Your OTP is ${otp}`;
+
+  const info = await apiInstance.sendTransacEmail(sendSmtpEmail);
+
+  console.log("Mail Sent:", info);
 
 } catch (err) {
-  console.log(err);
+
   console.log("MAIL ERROR:", err);
 
   return res.status(500).json({
     success: false,
     message: err.message,
   });
+
 }
    
     console.log("Mail Sent");
