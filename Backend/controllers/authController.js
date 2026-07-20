@@ -5,7 +5,6 @@ const OTP = require("../models/OTP");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
-const { apiInstance, brevo } = require("../config/mail");
 // =======================
 // Register User
 // =======================
@@ -112,64 +111,55 @@ console.log("Login User ID:", user._id);
 };
 
 exports.forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-    const otp = otpGenerator.generate(6, {
-      upperCaseAlphabets: false,
-      lowerCaseAlphabets: false,
-      specialChars: false,
-    });
-
-    await OTP.deleteMany({ email });
-
-    await OTP.create({
-      email,
-      otp,
-    });
-
-    const sendSmtpEmail = new brevo.SendSmtpEmail();
-
-    sendSmtpEmail.sender = {
-      name: "Finly",
-      email: process.env.SENDER_EMAIL,
-    };
-
-    sendSmtpEmail.to = [
-      {
-        email: email,
+try {
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "accept": "application/json",
+      "content-type": "application/json",
+      "api-key": process.env.BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender: {
+        name: "Finly",
+        email: process.env.SENDER_EMAIL,
       },
-    ];
+      to: [
+        {
+          email: email,
+        },
+      ],
+      subject: "Finly Password Reset OTP",
+      textContent: `Your OTP is ${otp}`,
+    }),
+  });
 
-    sendSmtpEmail.subject = "Finly Password Reset OTP";
-    sendSmtpEmail.textContent = `Your OTP is ${otp}`;
+  const data = await response.json();
 
-    const info = await apiInstance.sendTransacEmail(sendSmtpEmail);
-
-    console.log("BREVO RESPONSE:", info);
-
-    return res.status(200).json({
-      success: true,
-      message: "OTP Sent Successfully",
-    });
-
-  } catch (error) {
-    console.log(error);
+  if (!response.ok) {
+    console.log(data);
 
     return res.status(500).json({
       success: false,
-      message: error.message,
+      message: data.message || "Failed to send email",
     });
   }
+
+  console.log("BREVO RESPONSE:", data);
+
+  return res.status(200).json({
+    success: true,
+    message: "OTP Sent Successfully",
+  });
+
+} catch (err) {
+  console.log(err);
+
+  return res.status(500).json({
+    success: false,
+    message: err.message,
+  });
+}
 };
 
 exports.resetPassword = async (req, res) => {
