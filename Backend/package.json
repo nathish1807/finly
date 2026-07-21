@@ -19,7 +19,8 @@
     "mongoose": "^8.24.1",
     "nodemailer": "^9.0.3",
     "otp-generator": "^4.0.1",
-    "recharts": "^3.9.2"
+    "recharts": "^3.9.2",
+    "resend": "^6.18.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

@@ -5,6 +5,7 @@ const OTP = require("../models/OTP");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
+const resend = require("../config/mail");
 // =======================
 // Register User
 // =======================
@@ -140,38 +141,15 @@ exports.forgotPassword = async (req, res) => {
     });
 
     // Send email using Brevo API
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        "api-key": process.env.BREVO_API_KEY,
-      },
-      body: JSON.stringify({
-        sender: {
-          name: "Finly",
-          email: process.env.SENDER_EMAIL,
-        },
-        to: [
-          {
-            email,
-          },
-        ],
-        subject: "Finly Password Reset OTP",
-        textContent: `Your OTP is ${otp}`,
-      }),
-    });
+    // Send email using Resend
+const data = await resend.emails.send({
+  from: process.env.SENDER_EMAIL,
+  to: email,
+  subject: "Finly Password Reset OTP",
+  text: `Your OTP is ${otp}`,
+});
 
-    const data = await response.json();
-
-    console.log(data);
-
-    if (!response.ok) {
-      return res.status(500).json({
-        success: false,
-        message: data.message || "Failed to send email",
-      });
-    }
+console.log("Resend Response:", data);
 
     return res.status(200).json({
       success: true,
