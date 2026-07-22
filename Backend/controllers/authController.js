@@ -147,8 +147,6 @@ const { data, error } = await resend.emails.send({
   to: email,
   subject: "Finly | Password Reset Verification Code",
   html: `
-    <h2>Finly Password Reset</h2>
-
     <p>Hello <strong>${user.name}</strong>,</p>
 
     <p>We received a request to reset the password for your <strong>Finly</strong> account.</p>
