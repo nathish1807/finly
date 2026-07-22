@@ -145,7 +145,7 @@ exports.forgotPassword = async (req, res) => {
 const { data, error } = await resend.emails.send({
   from: "Finly Team <noreply@finly.bond>",
   to: email,
-  subject: "Finly | Password Reset Verification Code",
+  subject: "Password Reset Verification Code",
   html: `
     <p>Hello <strong>${user.name}</strong>,</p>
     <p>We received a request to reset the password for your <strong>Finly</strong> account.</p>
@@ -153,10 +153,12 @@ const { data, error } = await resend.emails.send({
 
     <h1 style="letter-spacing:5px; color:#2563eb;">${otp}</h1>
 
-    <p><strong>This OTP is valid for 10 minutes.</strong></p>
-    <br>
-    <p>Regards,</p>
-    <p><strong>Finly Team</strong></p>
+   <p style="margin-bottom:24px;">
+  <strong>This OTP is valid for 10 minutes.</strong>
+</p>
+
+<p style="margin:0;">Regards,</p>
+<p style="margin:4px 0 0;"><strong>Finly Team</strong></p>
   `,
 });
 
