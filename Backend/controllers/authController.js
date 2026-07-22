@@ -142,11 +142,28 @@ exports.forgotPassword = async (req, res) => {
 
     // Send email using Brevo API
     // Send email using Resend
-const data = await resend.emails.send({
-  from: process.env.SENDER_EMAIL,
+await resend.emails.send({
+  from: "Finly Team <noreply@finly.bond>",
   to: email,
-  subject: "Finly Password Reset OTP",
-  text: `Your OTP is ${otp}`,
+  subject: "Finly | Password Reset Verification Code",
+  html: `
+    <h2>Finly Password Reset</h2>
+
+    <p>Hello <strong>${user.name}</strong>,</p>
+
+    <p>We received a request to reset the password for your <strong>Finly</strong> account.</p>
+
+    <p>Your verification code is:</p>
+
+    <h1 style="letter-spacing:5px; color:#2563eb;">${otp}</h1>
+
+    <p><strong>This OTP is valid for 10 minutes.</strong></p>
+
+    <br>
+
+    <p>Regards,</p>
+    <p><strong>Finly Team</strong><br>
+  `,
 });
 
 console.log("Resend Response:", data);
