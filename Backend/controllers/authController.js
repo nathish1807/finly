@@ -142,7 +142,7 @@ exports.forgotPassword = async (req, res) => {
 
     // Send email using Brevo API
     // Send email using Resend
-await resend.emails.send({
+const { data, error } = await resend.emails.send({
   from: "Finly Team <noreply@finly.bond>",
   to: email,
   subject: "Finly | Password Reset Verification Code",
@@ -162,9 +162,18 @@ await resend.emails.send({
     <br>
 
     <p>Regards,</p>
-    <p><strong>Finly Team</strong><br>
+    <p><strong>Finly Team</strong></p>
   `,
 });
+
+if (error) {
+  console.log(error);
+
+  return res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
 
 console.log("Resend Response:", data);
 
