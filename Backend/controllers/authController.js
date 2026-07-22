@@ -148,17 +148,13 @@ const { data, error } = await resend.emails.send({
   subject: "Finly | Password Reset Verification Code",
   html: `
     <p>Hello <strong>${user.name}</strong>,</p>
-
     <p>We received a request to reset the password for your <strong>Finly</strong> account.</p>
-
     <p>Your verification code is:</p>
 
     <h1 style="letter-spacing:5px; color:#2563eb;">${otp}</h1>
 
     <p><strong>This OTP is valid for 10 minutes.</strong></p>
-
     <br>
-
     <p>Regards,</p>
     <p><strong>Finly Team</strong></p>
   `,
