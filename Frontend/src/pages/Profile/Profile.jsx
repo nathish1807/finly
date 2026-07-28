@@ -173,7 +173,7 @@ shadow-[0_25px_70px_rgba(0,0,0,.45)]
       selectedImage
         ? selectedImage
         : form.profileImage
-        ? `http://localhost:5000${form.profileImage}`
+        ? `https://finly-backend-nybo.onrender.com${form.profileImage}`
         : `https://ui-avatars.com/api/?name=${encodeURIComponent(form.name)}&background=D4AF37&color=000`
     }
     alt="Profile"
