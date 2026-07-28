@@ -130,7 +130,10 @@ for (let i = 0; i < 12; i++) {
   <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto lg:justify-end">
 
     <button
-      onClick={() => downloadReport(transactions)}
+      onClick={() => {
+  console.log(transactions);
+  downloadReport(transactions);
+}}
       className="
       w-full
 sm:w-auto
