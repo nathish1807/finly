@@ -7,7 +7,7 @@ import Button from "../../components/Button/Button.jsx";
 import Logo from "../../components/Logo/Logo.jsx";
 import { login } from "../../services/authService.js";
 import { EMAIL_REGEX, ROUTES } from "../../utils/constants";
-
+import LoginSuccessModal from "../../components/LoginSuccessModal";
 const INITIAL_ERRORS = { email: "", password: "" };
 
 export default function Login() {
@@ -18,7 +18,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState("");
-
+const [loginSuccess, setLoginSuccess] = useState(false);
   const handleChange = (field) => (e) => {
     const value = field === "rememberMe" ? e.target.checked : e.target.value;
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -50,8 +50,12 @@ export default function Login() {
 
     setIsLoading(true);
     try {
-      await login({ email: form.email, password: form.password });
-      navigate(ROUTES.DASHBOARD);
+      await login({
+  email: form.email,
+  password: form.password,
+});
+
+setLoginSuccess(true);
     } catch (err) {
       // Placeholder error message — real backend will return specific error codes.
 setServerError(
@@ -62,22 +66,30 @@ setServerError(
     }
   };
 
-  return (
-    <AuthLayout>
-      <div className="mb-8 hidden lg:block">
-        <Logo />
-      </div>
+ return (
+  <>
+    {loginSuccess && (
+      <LoginSuccessModal
+        onClose={() => {
+          setLoginSuccess(false);
+          navigate(ROUTES.DASHBOARD);
+        }}
+      />
+    )}
 
-      <h1 className="text-2xl font-bold text-ink-900 sm:text-3xl">Welcome</h1>
-      <p className="mt-2 text-sm text-ink-500">
-        Log in to keep track of your income, expenses and budgets.
-      </p>
+    <AuthLayout cardWidth="max-w-[340px]">
+
+      <h1 className="text-4xl font-bold text-white">
+        Welcome
+      </h1>
+      {/* <p className="mt-3 text-gray-400 text-base leading-7">
+  Sign in to securely manage your finances, monitor expenses and stay in control.
+</p> */}
 
       {serverError && (
         <div
           role="alert"
-          className="mt-6 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3.5 text-sm text-red-700"
-        >
+          className="mt-6 flex items-start gap-3 rounded-2xl border border-[#5B2A2A] bg-[#2B1616] p-4 text-sm text-[#FCA5A5]">
           <FiAlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
           <span>{serverError}</span>
         </div>
@@ -108,7 +120,13 @@ setServerError(
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="text-ink-400 transition-colors hover:text-ink-600 focus-visible:outline-none"
+              className="
+text-[#7A7A7A]
+hover:text-[#D4AF37]
+transition-all
+duration-300
+cursor-pointer
+"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
@@ -117,18 +135,18 @@ setServerError(
         />
 
         <div className="flex items-center justify-between text-sm">
-          <label className="flex cursor-pointer items-center gap-2 text-ink-600">
+          <label className="flex cursor-pointer items-center gap-2 text-gray-300">
             <input
               type="checkbox"
               checked={form.rememberMe}
               onChange={handleChange("rememberMe")}
-              className="h-4 w-4 rounded border-ink-300 text-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300"
+              className="h-4 w-4 rounded border-[#555] bg-[#222] text-[#9C6B45] focus:ring-[#9C6B45]"
             />
             Remember me
           </label>
           <Link
             to="/forgot-password"
-            className="font-medium text-brand-600"
+            className="font-medium text-[#D4AF37] hover:text-[#F0C96A] transition"
           >
             Forgot password?
           </Link>
@@ -139,21 +157,22 @@ setServerError(
         </Button>
       </form>
 
-      <div className="my-7 flex items-center gap-3">
+      {/* <div className="my-7 flex items-center gap-3">
+        <span className="h-px flex-1 bg-[#333]" />
+        <span className="text-xs font-medium uppercase tracking-wide text-gray-500">or</span>
         <span className="h-px flex-1 bg-ink-100" />
-        <span className="text-xs font-medium uppercase tracking-wide text-ink-400">or</span>
-        <span className="h-px flex-1 bg-ink-100" />
-      </div>
+      </div> */}
 
-      <p className="text-center text-sm text-ink-500">
+      <p className="mt-4 text-center text-sm text-ink-500">
         Don&apos;t have an account?{" "}
         <Link
           to={ROUTES.REGISTER}
-          className="font-semibold text-brand-600 transition-colors hover:text-brand-700"
+          className="font-semibold text-[#D4AF37] hover:text-[#F0C96A] transition"
         >
-          Create one
+          Create Account
         </Link>
       </p>
     </AuthLayout>
+    </>
   );
 }

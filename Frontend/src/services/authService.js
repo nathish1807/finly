@@ -29,15 +29,26 @@ export const getDashboard = async () => {
   const response = await API.get("/dashboard");
   return response.data;
 };
-export const forgotPassword=async(email)=>{
+export const forgotPassword = async (userData) => {
 
-const response=await API.post("/auth/forgot-password",{
+  const response = await API.post(
+    "/auth/forgot-password",
+    {
+      email: userData.email,
+    }
+  );
 
-email,
+  return response.data;
+};
 
-});
+export const verifyOTP = async (data) => {
 
-return response.data;
+  const response = await API.post(
+    "/auth/verify-otp",
+    data
+  );
+
+  return response.data;
 
 };
 

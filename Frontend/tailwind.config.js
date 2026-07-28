@@ -3,6 +3,16 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+       keyframes: {
+    shine: {
+      "0%": { left: "-35%" },
+      "100%": { left: "135%" },
+    },
+  },
+  animation: {
+    shine: "shine 2.5s linear infinite",
+  },
+
       colors: {
         // Primary brand blue — used for CTAs, links, focus rings
         brand: {

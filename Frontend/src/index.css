@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0B0B0B;
+  --card: #161616;
+  --border: #2A2A2A;
+
+  --primary: #8B5E3C;
+  --primary-light: #D4AF37;
+
+  --text: #F5F5F5;
+  --muted: #A1A1AA;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,
+body,
+#root{
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+  background:#0B0B0B;
+}
+
+body{
+  background:#0B0B0B;
+  color:#F5F5F5;
+  font-family:"Poppins",sans-serif;
+}

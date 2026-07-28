@@ -4,8 +4,8 @@
  */
 export default function PageContainer({ children, className = "" }) {
   return (
-    <div className={["mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8", className].join(" ")}>
-      {children}
+<div className="bg-[#0B0B0B]">
+        {children}
     </div>
   );
 }

@@ -111,6 +111,9 @@ console.log("Login User ID:", user._id);
   }
 };
 
+// =======================
+// Forgot Password
+// =======================
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -140,38 +143,39 @@ exports.forgotPassword = async (req, res) => {
       otp,
     });
 
-    // Send email using Brevo API
-    // Send email using Resend
-const { data, error } = await resend.emails.send({
-  from: "Finly Team <noreply@finly.bond>",
-  to: email,
-  subject: "Password Reset Verification Code",
-  html: `
-    <p>Hello <strong>${user.name}</strong>,</p>
-    <p>We received a request to reset the password for your <strong>Finly</strong> account.</p>
-    <p>Your verification code is:</p>
+    // Send Email
+    const { data, error } = await resend.emails.send({
+      from: "Finly Team <noreply@finly.bond>",
+      to: email,
+      subject: "Password Reset Verification Code",
+      html: `
+        <p>Hello <strong>${user.name}</strong>,</p>
 
-    <h1 style="letter-spacing:5px; color:#2563eb;">${otp}</h1>
+        <p>We received a request to reset the password for your <strong>Finly</strong> account.</p>
 
-   <p style="margin-bottom:24px;">
-  <strong>This OTP is valid for 10 minutes.</strong>
-</p>
+        <p>Your verification code is:</p>
 
-<p style="margin:0;">Regards,</p>
-<p style="margin:4px 0 0;"><strong>Finly Team</strong></p>
-  `,
-});
+        <h1 style="letter-spacing:5px;color:#2563eb;">
+          ${otp}
+        </h1>
 
-if (error) {
-  console.log(error);
+        <p>
+          <strong>This OTP is valid for 10 minutes.</strong>
+        </p>
 
-  return res.status(500).json({
-    success: false,
-    message: error.message,
-  });
-}
+        <p>Regards,</p>
+        <p><strong>Finly Team</strong></p>
+      `,
+    });
 
-console.log("Resend Response:", data);
+    if (error) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
+    console.log(data);
 
     return res.status(200).json({
       success: true,
@@ -179,21 +183,23 @@ console.log("Resend Response:", data);
     });
 
   } catch (error) {
-    console.log(error);
 
     return res.status(500).json({
       success: false,
       message: error.message,
     });
+
   }
 };
 
-exports.resetPassword = async (req, res) => {
+// =======================
+// Verify OTP
+// =======================
+exports.verifyOTP = async (req, res) => {
   try {
 
-    const { email, otp, password } = req.body;
+    const { email, otp } = req.body;
 
-    // Check OTP
     const otpData = await OTP.findOne({
       email,
       otp,
@@ -205,6 +211,25 @@ exports.resetPassword = async (req, res) => {
         message: "Invalid OTP",
       });
     }
+
+    return res.status(200).json({
+      success: true,
+      message: "OTP Verified Successfully",
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+};
+exports.resetPassword = async (req, res) => {
+  try {
+
+    const { email, password } = req.body;
 
     // Encrypt password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -226,9 +251,11 @@ exports.resetPassword = async (req, res) => {
     });
 
   } catch (error) {
+
     res.status(500).json({
       success: false,
       message: error.message,
     });
+
   }
 };

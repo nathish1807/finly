@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-countup": "^6.5.3",
+    "three": "^0.185.1"
+  }
+}

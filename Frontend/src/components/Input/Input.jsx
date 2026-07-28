@@ -22,7 +22,7 @@ const Input = forwardRef(
         {label && (
           <label
             htmlFor={inputId}
-            className="mb-1.5 block text-sm font-medium text-ink-700"
+            className="mb-1 block text-sm font-semibold tracking-wide text-[#C89B5A]"
           >
             {label}
           </label>
@@ -35,31 +35,68 @@ const Input = forwardRef(
             aria-invalid={Boolean(error)}
             aria-describedby={error ? errorId : hint ? hintId : undefined}
             className={[
-              "h-11 w-full rounded-xl border bg-white px-3.5 text-sm text-ink-900",
-              "placeholder:text-ink-400",
-              "transition-all duration-200 ease-out",
-              "focus:outline-none focus:ring-2 focus:ring-offset-0",
-              error
-                ? "border-red-300 focus:border-red-400 focus:ring-red-200"
-                : "border-ink-200 focus:border-brand-400 focus:ring-brand-100",
-              trailing ? "pr-11" : "",
-              className,
-            ].join(" ")}
+  "h-10 px-5",
+  "w-full",
+  "rounded-2xl",
+
+  // Premium Matte Background
+  "bg-[#1A1A1A]",
+
+  // Border
+  "border",
+  "border-[#343434]",
+
+  // Padding
+  "h-10 px-5",
+
+  // Text
+  "text-white",
+  "text-[15px]",
+  "font-medium",
+
+  // Placeholder
+  "placeholder:text-[#7A7A7A]",
+
+  // Animation
+  "transition-all",
+  "duration-300",
+
+  // Hover
+  "hover:border-[#575757]",
+
+  // Focus
+  "focus:outline-none",
+  "focus:border-[#D4AF37]",
+  "focus:ring-4",
+  "focus:ring-[#D4AF37]/10",
+
+  // Luxury shadow
+  "shadow-[inset_0_1px_2px_rgba(255,255,255,0.03)]",
+
+  // Error
+  error
+    ? "border-red-500 focus:ring-red-500/20"
+    : "",
+
+  trailing ? "pr-14" : "",
+
+  className,
+].join(" ")}
             {...rest}
           />
           {trailing && (
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+            <div className="absolute inset-y-0 right-0 flex items-center pr-4">
               {trailing}
             </div>
           )}
         </div>
 
         {error ? (
-          <p id={errorId} className="mt-1.5 text-xs font-medium text-red-600">
+          <p id={errorId} className="mt-1 text-xs font-medium text-[#FCA5A5]">
             {error}
           </p>
         ) : hint ? (
-          <p id={hintId} className="mt-1.5 text-xs text-ink-500">
+          <p id={hintId} className="mt-2 text-xs text-gray-500">
             {hint}
           </p>
         ) : null}

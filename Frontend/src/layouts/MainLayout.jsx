@@ -6,10 +6,16 @@ import Footer from "../components/Footer/Footer.jsx";
  */
 export default function MainLayout({ children }) {
   return (
-    <div className="flex min-h-screen flex-col bg-ink-50">
-      <Navbar />
-      <main className="flex-1 animate-page py-8">{children}</main>
-      <Footer />
-    </div>
+   <div className="min-h-screen flex flex-col bg-[#0B0B0B] text-white">
+
+  <Navbar />
+
+  <main className="flex-1 animate-page py-8">
+    {children}
+  </main>
+
+  <Footer />
+
+</div>
   );
 }

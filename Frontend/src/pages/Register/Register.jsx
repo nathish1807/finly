@@ -5,6 +5,7 @@ import AuthLayout from "../../layouts/AuthLayout.jsx";
 import Input from "../../components/Input/Input.jsx";
 import Button from "../../components/Button/Button.jsx";
 import Logo from "../../components/Logo/Logo.jsx";
+import SuccessModal from "../../components/SuccessModal";
 import usePasswordStrength from "../../hooks/usePasswordStrength.js";
 import { register } from "../../services/authService.js";
 import { EMAIL_REGEX, PASSWORD_RULES, ROUTES } from "../../utils/constants";
@@ -15,7 +16,7 @@ const INITIAL_ERRORS = {
   password: "",
   confirmPassword: "",
   bankName:"",
-  terms: "",
+  // terms: "",
 };
 
 export default function Register() {
@@ -27,7 +28,7 @@ export default function Register() {
     password: "",
     confirmPassword: "",
     bankName: "",
-    terms: false,
+    // terms: false,
   });
   const [errors, setErrors] = useState(INITIAL_ERRORS);
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +36,7 @@ export default function Register() {
   const [serverError, setServerError] = useState("");
 const [isSuccess, setIsSuccess] = useState(false);
   const strength = usePasswordStrength(form.password);
+  // const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (field) => (e) => {
     const value = field === "terms" ? e.target.checked : e.target.value;
@@ -71,9 +73,9 @@ const [isSuccess, setIsSuccess] = useState(false);
   nextErrors.bankName = "Please select your bank.";
 }
 
-    if (!form.terms) {
-      nextErrors.terms = "You must accept the Terms to continue.";
-    }
+    // if (!form.terms) {
+    //   nextErrors.terms = "You must accept the Terms to continue.";
+    // }
 
     setErrors(nextErrors);
     return Object.values(nextErrors).every((msg) => !msg);
@@ -121,39 +123,52 @@ const handleSubmit = async (e) => {
   }
 };
 
-if (isSuccess) {
-  return (
-    <AuthLayout>
-      <div className="rounded-2xl border border-green-200 bg-green-50 p-8 text-center">
-        <h1 className="text-4xl font-bold text-green-700">
-          🎉 Account Created Successfully!
-        </h1>
+// if (isSuccess) {
+//   return (
+//     <AuthLayout cardWidth="max-w-[390px]">
+//       <div className="py-8 text-center">
 
-        <p className="mt-4 text-gray-600">
-          Your Finly account has been created successfully.
-        </p>
+//         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-[#8B5E3C] to-[#D4AF37] text-4xl">
+//           ✓
+//         </div>
 
-        <button
-          onClick={() => navigate(ROUTES.LOGIN)}
-          className="mt-6 rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold"
-        >
-          Go to Login Page
-        </button>
-      </div>
-    </AuthLayout>
-  );
-}
+//         <h1 className="mt-6 text-3xl font-bold text-white">
+//           Account Created!
+//         </h1>
 
-  return (
-    <AuthLayout>
-      <div className="mb-8 hidden lg:block">
-        <Logo />
-      </div>
+//         <p className="mt-3 text-gray-400 leading-7">
+//           Your Finly account has been created successfully.
+//           <br />
+//           Please log in to continue.
+//         </p>
 
-      <h1 className="text-2xl font-bold text-ink-900 sm:text-3xl">Create your account</h1>
-      <p className="mt-2 text-sm text-ink-500">
+//         <Button
+//           className="mt-8"
+//           fullWidth
+//           onClick={() => navigate(ROUTES.LOGIN)}
+//         >
+//           Go to Login
+//         </Button>
+
+//       </div>
+//     </AuthLayout>
+//   );
+// }
+
+return (
+  <AuthLayout cardWidth="max-w-[390px]">
+      
+{isSuccess && (
+  <SuccessModal
+    onClose={() => navigate(ROUTES.LOGIN)}
+  />
+)}
+      <h1 className="mt-2 text-3xl font-bold text-white">
+  Create your account
+</h1>
+      {/* <p className="mt-1 text-sm text-ink-500">
         Start tracking your money in under a minute.
-      </p>
+      </p> */}
 
       {serverError && (
         <div
@@ -165,7 +180,7 @@ if (isSuccess) {
         </div>
       )}
 
-      <form className="mt-8 flex flex-col gap-5" onSubmit={handleSubmit} noValidate>
+      <form className="mt-2 flex flex-col gap-2" onSubmit={handleSubmit} noValidate>
         <Input
           id="fullName"
           label="Full name"
@@ -191,16 +206,30 @@ if (isSuccess) {
         />
 
         <div>
-  <label className="block mb-2 text-sm font-medium">
+  <label className="mb-2 block text-sm font text-[#D4AF37]">
     Primary Bank
   </label>
 
-  <select
-    value={form.bankName}
-    onChange={handleChange("bankName")}
-    className="w-full rounded-lg border p-3"
-  >
-    <option value="">Select Bank</option>
+ <select
+  value={form.bankName}
+  onChange={handleChange("bankName")}
+  className="
+    h-10
+    w-full
+    rounded-2xl
+    bg-[#1A1A1A]
+    border
+    border-[#343434]
+    px-5
+    text-gray-500
+    focus:outline-none
+    focus:border-[#D4AF37]
+    focus:ring-4
+    focus:ring-[#D4AF37]/10
+    appearance-none
+  "
+>
+  <option value="">Select Bank</option>
 
     <option>State Bank of India (SBI)</option>
     <option>HDFC Bank</option>
@@ -265,7 +294,7 @@ if (isSuccess) {
           error={errors.confirmPassword}
         />
 
-        <div>
+        {/* <div>
           <label className="flex cursor-pointer items-start gap-2.5 text-sm text-ink-600">
             <input
               type="checkbox"
@@ -287,18 +316,18 @@ if (isSuccess) {
           {errors.terms && (
             <p className="mt-1.5 text-xs font-medium text-red-600">{errors.terms}</p>
           )}
-        </div>
-
+        </div> */}
+<p className="mt-1 text-center text-sm text-ink-500"></p>
         <Button type="submit" fullWidth isLoading={isLoading}>
-          Create account
+          Create Account
         </Button>
       </form>
 
-      <p className="mt-7 text-center text-sm text-ink-500">
+      <p className="mt-2 text-center text-sm text-ink-500">
         Already have an account?{" "}
         <Link
           to={ROUTES.LOGIN}
-          className="font-semibold text-brand-600 transition-colors hover:text-brand-700"
+          className=" font-semibold text-brand-600 transition-colors hover:text-brand-700"
         >
           Log in
         </Link>

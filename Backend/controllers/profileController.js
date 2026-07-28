@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const path = require("path");
 // Get Profile
 exports.getProfile = async (req, res) => {
   try {
@@ -74,5 +75,43 @@ exports.changePassword = async (req, res) => {
       success: false,
       message: error.message,
     });
+  }
+};
+// Upload Profile Photo
+exports.uploadProfilePhoto = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Please select an image.",
+      });
+    }
+
+    const imagePath = `/uploads/${req.file.filename}`;
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        profileImage: imagePath,
+      },
+      {
+        new: true,
+      }
+    ).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Profile photo uploaded successfully.",
+      profileImage: imagePath,
+      user,
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
   }
 };

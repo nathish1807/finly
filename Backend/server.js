@@ -2,6 +2,7 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const accountRoutes = require("./routes/accountRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 const profileRoutes = require("./routes/profileRoutes");
 require("dotenv").config();
@@ -18,6 +19,7 @@ connectDB();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.use("/api/auth", authRoutes);

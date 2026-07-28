@@ -1,60 +1,165 @@
 import Logo from "../components/Logo/Logo.jsx";
 import { APP_TAGLINE } from "../utils/constants";
+import Lottie from "lottie-react";
 
-/**
- * AuthLayout — split-screen layout shared by Login and Register.
- * Left: the form (passed as children). Right: brand panel, hidden on mobile.
- */
+import financeAnimation from "../assets/Rotate.json";
+import backgroundVideo from "../assets/Animated.mp4";
+
 export default function AuthLayout({ children }) {
   return (
-    <div className="grid min-h-screen grid-cols-1 lg:grid-cols-2">
-      <div className="flex flex-col justify-center px-4 py-10 sm:px-8 md:px-16 lg:px-20">
-        <div className="mx-auto w-full max-w-sm animate-page">
-          <div className="mb-8 lg:hidden">
-            <Logo />
-          </div>
-          {children}
-        </div>
-      </div>
+    <div className="relative h-screen w-full overflow-hidden">
 
-      <div className="relative hidden overflow-hidden bg-ink-900 lg:flex lg:flex-col lg:justify-between lg:p-12">
-        {/* Subtle grid texture, no loud gradients — matches "minimal fintech" brief */}
+      {/* Full Screen Background Animation */}
+      {/* Full Screen Background Video */}
+<div className="absolute inset-0 -z-20 overflow-hidden">
+
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="auto"
+    className="h-full w-full object-cover"
+  >
+    <source src={backgroundVideo} type="video/mp4" />
+  </video>
+
+</div>
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/45 to-black/70 -z-10"></div>
+
+      {/* Background Glow */}
+      <div className="absolute top-20 right-16 h-[320px] w-[320px] rounded-full bg-[#FFD700]/6 blur-[180px]" />
+
+<div className="absolute bottom-16 left-10 h-[260px] w-[260px] rounded-full bg-[#FFD700]/5 blur-[160px]" />
+
+      {/* Main Layout */}
+      <div className="relative z-10 flex h-screen flex-col lg:grid lg:grid-cols-[43%_57%]">
+
+        {/* LEFT PANEL */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-          aria-hidden="true"
-        />
+  className="
+  flex
+  flex-1
+  items-center
+  justify-center
+  px-4
+  sm:px-6
+  py-8
+  "
+>
 
-        <div className="relative">
-          <Logo />
-        </div>
+          <div
+  className="
+  relative
+  group
+  w-full
+  max-w-[420px]
+  "
+>
 
-        <div className="relative max-w-md">
-          <p className="text-3xl font-display font-semibold leading-tight text-white">
-            {APP_TAGLINE}
-          </p>
-          <p className="mt-4 text-ink-300">
-            Balances, spending and budgets — all in one clean, connected view.
-          </p>
-        </div>
+            {/* Hover Glow */}
+            <div
+              className="
+                absolute
+                -inset-10
+                -z-10
+                rounded-[40px]
+                bg-[#D4AF37]
+                opacity-0
+                blur-[120px]
+                transition-all
+                duration-500
+                group-hover:opacity-30
+              "
+            />
 
-        <div className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
-          <p className="text-sm text-ink-300">Monthly spending</p>
-          <div className="mt-3 flex items-end gap-1.5" aria-hidden="true">
-            {[38, 52, 44, 61, 49, 70, 58].map((h, i) => (
-              <span
-                key={i}
-                className="w-6 rounded-md bg-accent-500/80"
-                style={{ height: `${h}px` }}
-              />
-            ))}
+            {/* Login Card */}
+            <div
+              className="
+                relative
+                rounded-[32px]
+                border
+                border-[#2E2E2E]
+                bg-[#171717]
+                px-5 sm:px-6
+py-6 sm:py-7
+                transition-all
+                duration-500
+                shadow-[0_25px_70px_rgba(0,0,0,.75)]
+                md:group-hover:-translate-y-3
+md:group-hover:scale-[1.02]
+                group-hover:border-[#D4AF37]
+                group-hover:shadow-[0_45px_100px_rgba(212,175,55,.20)]
+              "
+            >
+
+              <div className="mb-5">
+                <Logo />
+              </div>
+
+              {children}
+
+            </div>
+
           </div>
+
         </div>
+
+        {/* RIGHT PANEL */}
+        <div
+  className="
+  hidden
+  lg:flex
+  flex-col
+  items-center
+  justify-center
+  px-20
+  xl:px-30
+  "
+>
+
+          <div className="max-w-[800px]">
+
+            <h1
+  className="
+    text-4xl
+    sm:text-4xl
+    lg:text-4xl
+    xl:text-5xl
+    2xl:text-5xl
+    font-extrabold
+    leading-[1.05]
+    tracking-tight
+    text-white
+    drop-shadow-[0_0_15px_rgba(212,175,55,0.25)]
+  "
+>
+  {APP_TAGLINE}
+</h1>
+
+            <p className="mt-0 text-lg text-gray-300">
+              All in one clean, connected view.
+            </p>
+
+          </div>
+
+          <Lottie
+            animationData={financeAnimation}
+            loop
+            className="
+w-[260px]
+h-[260px]
+xl:w-[90%] sm:w-[350px]
+xl:h-[350px]
+"
+          />
+
+        </div>
+
       </div>
+
     </div>
   );
 }

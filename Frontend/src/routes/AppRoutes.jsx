@@ -10,9 +10,10 @@ import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute.jsx";
 import { ROUTES } from "../utils/constants";
 import Reports from "../pages/Reports/Reports.jsx";
 import Profile from "../pages/Profile/Profile";
-import ForgotPassword from "../pages/ForgotPassword/ForgotPassword.jsx";
-import ResetPassword from "../pages/ResetPassword/ResetPassword.jsx";
 
+import ForgotPassword from "../pages/Auth/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword/ResetPassword.jsx";
+import OTPVerification from "../pages/Auth/OTPVerification";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -22,7 +23,11 @@ export default function AppRoutes() {
   <Route
     path="/forgot-password"
     element={<ForgotPassword />}
-  />
+/>
+<Route
+  path="/verify-otp"
+  element={<OTPVerification />}
+/>
 
   <Route
     path="/reset-password"
@@ -70,6 +75,7 @@ export default function AppRoutes() {
     </ProtectedRoute>
   }
 />
+
 
       <Route path="*" element={<NotFound />} />
     </Routes>

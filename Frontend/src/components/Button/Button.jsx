@@ -2,31 +2,48 @@ import { forwardRef } from "react";
 import Loader from "../Loader/Loader.jsx";
 
 const VARIANT_CLASSES = {
-  primary:
-    "bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800 shadow-soft focus-visible:ring-brand-400",
-  secondary:
-    "bg-white text-ink-700 border border-ink-200 hover:bg-ink-50 active:bg-ink-100 focus-visible:ring-brand-300",
-  ghost:
-    "bg-transparent text-ink-600 hover:bg-ink-100 active:bg-ink-200 focus-visible:ring-brand-300",
-  danger:
-    "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-soft focus-visible:ring-red-300",
+  primary: `
+    relative overflow-hidden
+    bg-gradient-to-r
+    from-[#6F4A2F]
+    via-[#A87449]
+    to-[#D4AF37]
+    text-[#111111]
+    shadow-[0_12px_30px_rgba(212,175,55,0.30)]
+    hover:shadow-[0_18px_45px_rgba(212,175,55,0.45)]
+    hover:brightness-110
+    focus-visible:ring-[#D4AF37]
+  `,
+
+  secondary: `
+    bg-[#171717]
+    border border-[#2C2C2C]
+    text-white
+    hover:bg-[#202020]
+    hover:border-[#C89B5A]
+  `,
+
+  ghost: `
+    bg-transparent
+    text-[#D4AF37]
+    hover:bg-[#1A1A1A]
+  `,
+
+  danger: `
+    bg-gradient-to-r
+    from-[#7A2E2E]
+    to-[#B23A3A]
+    text-white
+    hover:brightness-110
+  `,
 };
 
 const SIZE_CLASSES = {
-  sm: "h-9 px-3.5 text-sm",
-  md: "h-11 px-5 text-sm",
-  lg: "h-12 px-6 text-base",
+  sm: "h-8 px-4 text-xs rounded-lg",
+  md: "h-10 px-4 text-sm rounded-lg",
+  lg: "h-11 px-5 text-base rounded-xl",
 };
 
-/**
- * Button — shared CTA element used across the app.
- *
- * Props:
- *  - variant: 'primary' | 'secondary' | 'ghost' | 'danger'
- *  - size: 'sm' | 'md' | 'lg'
- *  - isLoading: shows an inline loader and disables interaction
- *  - fullWidth: stretches to container width
- */
 const Button = forwardRef(
   (
     {
@@ -36,24 +53,35 @@ const Button = forwardRef(
       isLoading = false,
       fullWidth = false,
       disabled = false,
+      leftIcon,
+      rightIcon,
       type = "button",
       className = "",
       ...rest
     },
     ref
   ) => {
+    const isDisabled = disabled || isLoading;
+
     return (
       <button
         ref={ref}
         type={type}
-        disabled={disabled || isLoading}
+        disabled={isDisabled}
         aria-busy={isLoading}
         className={[
-          "inline-flex items-center justify-center gap-2 rounded-xl font-semibold",
-          "transition-all duration-200 ease-out",
-          "active:scale-[0.98]",
-          "disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-50",
+"relative inline-flex items-center justify-center gap-2",
+          "rounded-2xl",
+          "font-semibold",
+          "transition-all duration-300 ease-in-out",
+          "hover:-translate-y-0.5",
+"hover:-translate-y-1 active:scale-95",
+          "focus-visible:outline-none",
+          "focus-visible:ring-2",
+          "focus-visible:ring-offset-2",
+          "disabled:opacity-60",
+          "disabled:pointer-events-none",
+          "disabled:cursor-not-allowed",
           VARIANT_CLASSES[variant],
           SIZE_CLASSES[size],
           fullWidth ? "w-full" : "",
@@ -61,8 +89,50 @@ const Button = forwardRef(
         ].join(" ")}
         {...rest}
       >
-        {isLoading && <Loader size="sm" tone={variant === "primary" || variant === "danger" ? "light" : "dark"} />}
-        <span>{isLoading ? "Please wait…" : children}</span>
+        {variant === "primary" && (
+  <span
+    className="
+      absolute
+      inset-0
+      -translate-x-full
+      bg-gradient-to-r
+      from-transparent
+      via-white/20
+      to-transparent
+      hover:translate-x-full
+      transition-transform
+      duration-1000
+    "
+  />
+)}
+        {isLoading ? (
+          <>
+            <Loader
+              size="sm"
+              tone={
+                variant === "primary" || variant === "danger"
+                  ? "light"
+                  : "dark"
+              }
+            />
+            <span className="relative z-10">
+  {children}
+</span>
+          </>
+        ) : (
+          <>
+            {leftIcon && (
+              <span className="flex items-center">{leftIcon}</span>
+            )}
+
+            <span className="relative z-10">
+  {children}
+</span>
+            {rightIcon && (
+              <span className="flex items-center">{rightIcon}</span>
+            )}
+          </>
+        )}
       </button>
     );
   }

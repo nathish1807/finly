@@ -19,14 +19,14 @@ export default function Logo({ size = "md", withLink = true, className = "" }) {
       <span
         className={[
           sizes.mark,
-          "flex items-center justify-center rounded-xl bg-brand-600 text-white shadow-soft",
+          "flex items-center justify-center rounded-2xl bg-gradient-to-br from-[#8B5E3C] to-[#D4AF37] text-black shadow-xl",
         ].join(" ")}
         aria-hidden="true"
       >
         <svg viewBox="0 0 24 24" fill="none" className="h-[55%] w-[55%]">
           <path
             d="M3 15L9 9L13 13L21 5"
-            stroke="currentColor"
+            stroke="#111111"
             strokeWidth="2.4"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -40,9 +40,17 @@ export default function Logo({ size = "md", withLink = true, className = "" }) {
           />
         </svg>
       </span>
-      <span className={["font-display font-bold tracking-tight text-ink-900", sizes.text].join(" ")}>
-        {APP_NAME}
-      </span>
+      <span
+ 
+  className={[
+    "bg-gradient-to-r from-[#F8F5E4] via-[#D4AF37] to-[#B88A44]",
+    "bg-clip-text text-transparent",
+    "font-bold tracking-wide",
+    sizes.text,
+  ].join(" ")}
+>
+  {APP_NAME}
+</span>
     </span>
   );
 
