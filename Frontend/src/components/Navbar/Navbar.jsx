@@ -122,7 +122,7 @@ hover:shadow-[0_0_20px_rgba(212,175,55,.15)]
             <img
   src={
     user?.profileImage
-      ? `http://localhost:5000${user.profileImage}`
+      ? `https://finly-backend-nybo.onrender.com${user.profileImage}`
       : `https://ui-avatars.com/api/?name=${encodeURIComponent(
           user?.name || "User"
         )}&background=D4AF37&color=000`
