@@ -13,27 +13,60 @@ export const downloadExcel = (transactions) => {
 
   const balance = totalIncome - totalExpense;
 
-  const data = transactions.map((tx) => ({
+  // ==========================
+  // Summary Sheet
+  // ==========================
+
+  const summary = [
+    {
+      "FINLY FINANCIAL REPORT": "",
+    },
+    {},
+    {
+      Metric: "Total Income",
+      Value: totalIncome,
+    },
+    {
+      Metric: "Total Expense",
+      Value: totalExpense,
+    },
+    {
+      Metric: "Current Balance",
+      Value: balance,
+    },
+    {
+      Metric: "Total Transactions",
+      Value: transactions.length,
+    },
+    {
+      Metric: "Generated On",
+      Value: new Date().toLocaleString(),
+    },
+  ];
+
+  // ==========================
+  // Transactions Sheet
+  // ==========================
+
+  const transactionData = transactions.map((tx, index) => ({
+    "S.No": index + 1,
+    Date: new Date(tx.date).toLocaleDateString(),
     Category: tx.category,
     Type: tx.type,
     Amount: Number(tx.amount),
     Description: tx.description || "-",
-    Date: new Date(tx.date).toLocaleDateString(),
   }));
 
-  // Summary Sheet
-  const summary = [
-    {
-      "Total Income": totalIncome,
-      "Total Expense": totalExpense,
-      Balance: balance,
-      Transactions: transactions.length,
-    },
-  ];
+  // ==========================
+  // Workbook
+  // ==========================
 
   const workbook = XLSX.utils.book_new();
 
   const summarySheet = XLSX.utils.json_to_sheet(summary);
+
+  const transactionSheet =
+    XLSX.utils.json_to_sheet(transactionData);
 
   XLSX.utils.book_append_sheet(
     workbook,
@@ -41,17 +74,11 @@ export const downloadExcel = (transactions) => {
     "Summary"
   );
 
-  const transactionSheet =
-    XLSX.utils.json_to_sheet(data);
-
   XLSX.utils.book_append_sheet(
     workbook,
     transactionSheet,
     "Transactions"
   );
 
-  XLSX.writeFile(
-    workbook,
-    "Finly_Report.xlsx"
-  );
+  XLSX.writeFile(workbook, "Finly_Report.xlsx");
 };
