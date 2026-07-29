@@ -66,7 +66,7 @@ shadow-[0_20px_80px_rgba(0,0,0,.45)]
      <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-[#D4AF37]/10 blur-[140px]" />
 
       {/* Center Glass Card */}
-      <div className="pointer-events-none absolute left-1/2 top-[41.5%] z-[1] flex h-28 w-28 sm:h-28 sm:w-28 lg:h-36 lg:w-36 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-[#D4AF37]/20 bg-white/5 backdrop-blur-xl shadow-[0_0_35px_rgba(255,215,0,.15)]">
+      <div className="pointer-events-none absolute left-1/2 top-[44.5%] z-[1] flex h-28 w-28 sm:h-28 sm:w-28 lg:h-36 lg:w-36 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-[#D4AF37]/20 bg-white/5 backdrop-blur-xl shadow-[0_0_35px_rgba(255,215,0,.15)]">
 
        <p className="text-[9px] sm:text-xs uppercase tracking-[3px] text-gray-400">
           Total
