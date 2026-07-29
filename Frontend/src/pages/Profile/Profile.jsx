@@ -4,12 +4,13 @@ import toast from "react-hot-toast";
 import MainLayout from "../../layouts/MainLayout";
 import PageContainer from "../../components/PageContainer/PageContainer";
 import Card from "../../components/Card/Card";
+import { FiUser } from "react-icons/fi";
 
 import {
   getProfile,
   updateProfile,
   changePassword,
-  uploadProfilePhoto,
+ 
 } from "../../services/profileService";
 
 import { getDashboard } from "../../services/authService";
@@ -80,27 +81,7 @@ const loadStats = async () => {
       [e.target.name]: e.target.value,
     });
   };
-const handlePhotoUpload = async (e) => {
-  try {
-    const file = e.target.files[0];
 
-    if (!file) return;
-
-    const data = await uploadProfilePhoto(file);
-
-    setForm((prev) => ({
-      ...prev,
-      profileImage: data.profileImage,
-    }));
-
-    setSelectedImage(URL.createObjectURL(file));
-
-    toast.success("Profile photo updated");
-
-  } catch (error) {
-    toast.error("Upload failed");
-  }
-};
   const handleUpdateProfile = async () => {
     try {
       await updateProfile(form);
@@ -168,63 +149,17 @@ shadow-[0_25px_70px_rgba(0,0,0,.45)]
 
 <div className="relative">
 
-  <img
-    src={
-      selectedImage
-        ? selectedImage
-        : form.profileImage
-        ? `https://finly-backend-nybo.onrender.com${form.profileImage}`
-        : `https://ui-avatars.com/api/?name=${encodeURIComponent(form.name)}&background=D4AF37&color=000`
-    }
-    alt="Profile"
-    className="
-      h-32
-      w-32
-      rounded-full
-      object-cover
-    
-      shadow-[0_0_30px_rgba(212,175,55,.35)]
-    "
-  />
+  <div className="h-32 w-32 rounded-full bg-[#242424] flex items-center justify-center">
+  <FiUser size={55} className="text-[#D4AF37]" />
+</div>
 
-  <label
-    className="
-absolute
-bottom-1
-right-1
-h-11
-w-11
-rounded-full
-bg-gradient-to-r
-from-[#8B5E3C]
-to-[#D4AF37]
-text-white
-border-2
-border-[#0E0E0E]
-shadow-[0_0_15px_rgba(212,175,55,.35)]
-flex
-items-center
-justify-center
-hover:scale-110
-transition-all
-duration-300
-"
-  >
-    📷
-
-    <input
-      type="file"
-      accept="image/*"
-      className="hidden"
-      onChange={handlePhotoUpload}
-    />
-  </label>
+ 
 
 </div>
 
 <div>
 
-<h1 className="text-4xl font-bold text-white">
+<h1 className="mt-4 text-4xl font-bold text-white">
 
 {form.name}
 

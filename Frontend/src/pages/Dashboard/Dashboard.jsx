@@ -165,10 +165,10 @@ const savingsRate =
 
   return (
     <MainLayout>
-<PageContainer className="flex flex-col gap-12 px-2 sm:px-4">
+<PageContainer className="flex flex-col gap-8 sm:gap-12 px-3 sm:px-4">
         {/* Heading */}
 
-<div className="relative mb-10 overflow-hidden rounded-3xl bg-gradient-to-r from-[#1A120B] via-[#3B2A20] to-[#8B5E3C] p-8 text-white shadow-2xl">
+<div className="relative mb-10 overflow-hidden rounded-3xl bg-gradient-to-r from-[#1A120B] via-[#3B2A20] to-[#8B5E3C] p-5 sm:p-6 lg:p-8 text-white shadow-2xl">
   <div className="absolute top-0 right-0 h-52 w-52 rounded-full bg-white/10 blur-3xl"></div>
 
   <div className="relative z-10">
@@ -183,7 +183,7 @@ const savingsRate =
     {greeting} 👋
   </p>
 
-  <h1 className="mt-2 text-5xl font-bold">
+  <h1 className="mt-2 text-2xl sm:text-3xl sm:text-4xl lg:text-5xl font-bold break-words">
     {user?.name}
   </h1>
 
@@ -228,7 +228,7 @@ const savingsRate =
   rounded-[28px]
   bg-gradient-to-br
   ${card.color}
-  p-7
+  p-5 sm:p-6 lg:p-7
   shadow-2xl
   border
   border-white/10
@@ -252,7 +252,7 @@ const savingsRate =
             {card.label}
           </p>
 
-          <h2 className="mt-4 text-5xl font-extrabold text-white">
+          <h2 className="mt-4 text-4xl sm:text-5xl font-extrabold text-white">
             ₹
 <CountUp
   end={card.value}
@@ -300,7 +300,7 @@ const savingsRate =
 </div>
 <Card className="mt-8 rounded-3xl border border-[#2B2B2B] bg-[#181818] p-8 shadow-xl">
 
-  <h2 className="text-3xl font-bold text-white mb-6">
+  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
     💡 Financial Insights
   </h2>
 
@@ -361,13 +361,13 @@ const savingsRate =
 </Card>
 <Card className="mt-8 rounded-3xl border border-[#D4AF37]/20 bg-[#181818] p-8 shadow-xl">
 
-<h2 className="text-3xl font-bold text-white mb-8">
+<h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">
 💡 Smart Spending Recommendations
 </h2>
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-<Card className="p-5">
+<Card className="p-4 sm:p-5">
 
 <p className="text-gray-400">
 Highest Spending Category
@@ -398,7 +398,7 @@ highestCategory.amount.toLocaleString()
 
 </Card>
 
-<Card className="p-5">
+<Card className="p-4 sm:p-5">
 
 <p className="text-gray-400">
 Income / Expense Ratio
@@ -438,7 +438,7 @@ Excellent above 30%
 
 </Card>
 
-<Card className="p-5">
+<Card className="pp-4 sm:p-5">
 
 <p className="text-gray-400">
 Expense Percentage
@@ -511,7 +511,7 @@ You can currently save
 
         <Card className="mt-8 rounded-3xl border border-[#2B2B2B] bg-[#181818] p-8 shadow-xl">
 
-          <h2 className="mb-0 text-3xl font-bold text-white">
+          <h2 className="mb-0 text-2xl sm:text-3xl font-bold text-white">
             Expense Breakdown
           </h2>
 
@@ -520,7 +520,7 @@ You can currently save
               No Expense Data Available
             </p>
           ) : (
-          <div className="h-[420px] overflow-visible">
+          <div className="mt-4 h-[340px] sm:h-[420px] ">
   <ExpenseChart data={expenseData} />
 </div>
           )}
@@ -535,7 +535,7 @@ You can currently save
 
     <div>
 
-        <h2 className="text-4xl font-bold text-white">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white">
             Recent Transactions
         </h2>
 
@@ -584,7 +584,7 @@ You can currently save
     bg-gradient-to-r
     from-[#202020]
     to-[#1A1A1A]
-    p-5
+    p-4 sm:p-5
     transition-all
     duration-500
     hover:-translate-y-1

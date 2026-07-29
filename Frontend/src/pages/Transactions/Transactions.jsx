@@ -4,7 +4,7 @@ import PageContainer from "../../components/PageContainer/PageContainer";
 import Card from "../../components/Card/Card";
 import toast from "react-hot-toast";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
-import SuccessScreen from "../../components/SuccessScreen";
+// import SuccessScreen from "../../components/SuccessScreen";
 import {
   getTransactions,
   addTransaction,
@@ -23,7 +23,7 @@ const [typeFilter, setTypeFilter] = useState("All");
 const [startDate, setStartDate] = useState("");
 const [endDate, setEndDate] = useState("");
 const [sortBy, setSortBy] = useState("latest");
-const [showTransactionSuccess, setShowTransactionSuccess] = useState(false);
+// const [showTransactionSuccess, setShowTransactionSuccess] = useState(false);
 const [currentPage, setCurrentPage] = useState(1);
 const transactionsPerPage = 10;
   const [form, setForm] = useState({
@@ -80,11 +80,8 @@ const handleSubmit = async (e) => {
       toast.success("Transaction Updated Successfully");
     } else {
       await addTransaction(form);
-      setShowTransactionSuccess(true);
 
-setTimeout(() => {
-  setShowTransactionSuccess(false);
-}, 2200);
+toast.success("Transaction Added Successfully");
     }
 
     setEditingId(null);
@@ -215,15 +212,15 @@ Manage your income and expenses with complete control.
 
 </div>
 
-<div className="grid grid-cols-3 gap-5">
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
-<div className="rounded-2xl bg-[#242424]/80 px-6 py-4 text-center">
+<div className="rounded-2xl bg-[#242424]/80 p-4 sm:px-6 sm:py-4 text-center min-w-0">
 
 <p className="text-gray-400 text-sm">
 Income
 </p>
 
-<h2 className="text-green-400 text-2xl font-bold">
+<h2 className="text-green-400 text-xl sm:text-2xl font-bold break-words">
 ₹{
 transactions
 .filter(t=>t.type==="Income")
@@ -234,13 +231,13 @@ transactions
 
 </div>
 
-<div className="rounded-2xl bg-[#242424]/80 px-6 py-4 text-center">
+<div className="rounded-2xl bg-[#242424]/80 p-4 sm:px-6 sm:py-4 text-center min-w-0">
 
 <p className="text-gray-400 text-sm">
 Expense
 </p>
 
-<h2 className="text-red-400 text-2xl font-bold">
+<h2 className="text-red-400 text-xl sm:text-2xl font-bold break-words">
 ₹{
 transactions
 .filter(t=>t.type==="Expense")
@@ -251,13 +248,13 @@ transactions
 
 </div>
 
-<div className="rounded-2xl bg-[#242424]/80 px-6 py-4 text-center">
+<div className="rounded-2xl bg-[#242424]/80 p-4 sm:px-6 sm:py-4 text-center min-w-0">
 
 <p className="text-gray-400 text-sm">
 Transactions
 </p>
 
-<h2 className="text-[#D4AF37] text-2xl font-bold">
+<h2 className="text-[#D4AF37] text-xl sm:text-2xl font-bold">
 {transactions.length}
 </h2>
 
@@ -466,12 +463,12 @@ focus:ring-[#D4AF37]/20
 Transaction Statistics
 </h2>
 
-<div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
-<Card className="p-5 text-center">
+<Card className="p-4 sm:p-5 text-center min-w-0">
 <p className="text-gray-400">Highest Income</p>
 
-<h2 className="mt-3 text-3xl font-bold text-green-400">
+<h2 className="mt-3 text-2xl sm:text-3xl font-bold text-green-400">
 ₹{
 transactions
 .filter(t=>t.type==="Income")
@@ -482,11 +479,11 @@ transactions
 
 </Card>
 
-<Card className="p-5 text-center">
+<Card className="p-4 sm:p-5 text-center min-w-0">
 
 <p className="text-gray-400">Highest Expense</p>
 
-<h2 className="mt-3 text-3xl font-bold text-red-400">
+<h2 className="mt-3 text-2xl sm:text-3xl font-bold text-red-400">
 
 ₹{
 transactions
@@ -499,13 +496,13 @@ transactions
 
 </Card>
 
-<Card className="p-5 text-center">
+<Card className="p-4 sm:p-5 text-center min-w-0">
 
 <p className="text-gray-400">
 Average Transaction
 </p>
 
-<h2 className="mt-3 text-3xl font-bold text-[#FFD700]">
+<h2 className="mt-3text-2xl sm:text-3xl font-bold text-[#FFD700]">
 
 ₹{
 transactions.length
@@ -520,13 +517,13 @@ transactions.reduce((a,b)=>a+b.amount,0)
 
 </Card>
 
-<Card className="p-5 text-center">
+<Card className="p-4 sm:p-5 text-center min-w-0">
 
 <p className="text-gray-400">
 Today's Transactions
 </p>
 
-<h2 className="mt-3 text-3xl font-bold text-cyan-400">
+<h2 className="mt-3 text-2xl sm:text-3xl font-bold text-cyan-400">
 
 {
 transactions.filter(
@@ -766,13 +763,12 @@ to-[#E6BE2F]
   py-2.5
   rounded-xl
   font-semibold
-  text-[#F8E7A1]
-  border
-  border-[#D4AF37]
-  bg-gradient-to-r
-  from-[#2A2413]
-  via-[#4E3F0B]
-  to-[#8B6B16]
+ text-black
+border-[#D4AF37]
+bg-gradient-to-r
+from-[#A87342]
+via-[#C79B3D]
+to-[#E6BE2F]
   transition-all
   duration-300
   hover:scale-105
@@ -891,17 +887,7 @@ to-[#E6BE2F]
         </Card>
 
       </PageContainer>
-       {showTransactionSuccess && (
-
-<SuccessScreen
-
-title="Transaction Added"
-
-subtitle="Your transaction has been saved successfully."
-
-/>
-
-)}
+      
     </MainLayout>
   );
 }

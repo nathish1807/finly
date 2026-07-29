@@ -379,7 +379,7 @@ Total Categories
 
           </div>
 
-          <div className="h-[280px] sm:h-[380px] lg:h-[500px] w-full">
+          <div className="h-[280px] sm:h-[380px] lg:h-[420px]">
 
             <MonthlyTrendChart
               data={monthlyData}

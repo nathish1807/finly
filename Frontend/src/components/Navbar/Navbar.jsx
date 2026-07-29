@@ -19,7 +19,8 @@ const NAV_LINKS = [
   { label: "Budgets", to: "/budgets" },
   { label: "Reports", to: "/reports" },
 ];
-
+// const IMAGE_URL = "http://localhost:5000";
+const BASE_URL = import.meta.env.VITE_API_URL;
 export default function Navbar() {
   const navigate = useNavigate();
 
@@ -33,6 +34,8 @@ export default function Navbar() {
 const loadProfile = async () => {
   try {
     const data = await getProfile();
+    console.log(data.user);          // Add this
+    console.log(data.user.profileImage); // Add this
     setUser(data.user);
   } catch (error) {
     console.log(error);
@@ -119,23 +122,7 @@ hover:border-[#D4AF37]
 hover:shadow-[0_0_20px_rgba(212,175,55,.15)]
 "
           >
-            <img
-  src={
-    user?.profileImage
-      ? `https://finly-backend-nybo.onrender.com${user.profileImage}`
-      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-          user?.name || "User"
-        )}&background=D4AF37&color=000`
-  }
-  alt="Profile"
-  className="
-    h-9
-    w-9
-    rounded-full
-    object-cover
-   
-  "
-/>
+            <FiUser size={22} className="text-white" />
             <FiChevronDown />
           </button>
 
@@ -144,24 +131,6 @@ hover:shadow-[0_0_20px_rgba(212,175,55,.15)]
 <div className="px-4 py-4 border-b border-[#333]">
 
 <div className="flex items-center gap-3">
-
-<img
-  src={
-    user?.profileImage
-      ? `http://localhost:5000${user.profileImage}`
-      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-          user?.name || "User"
-        )}&background=D4AF37&color=000`
-  }
-  alt="Profile"
-  className="
-    h-12
-    w-12
-    rounded-full
-    object-cover
-    
-  "
-/>
 
 <div>
 
@@ -254,61 +223,142 @@ to-transparent
       {mobileOpen && (
         <div className="md:hidden border-t bg-[#111111] border-t border-[#2A2A2A] animate-fadeIn">
 
-          {NAV_LINKS.map((link) => (
-            <NavLink
-              key={link.label}
-              to={link.to}
-              end
-              onClick={() => setMobileOpen(false)}
-              className={({ isActive }) =>
-                `block px-5 py-4 font-medium ${
-                  isActive
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-300 hover:bg-[#222]"
-                }`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
+        {NAV_LINKS.map((link) => (
+  <NavLink
+    key={link.label}
+    to={link.to}
+    end
+    onClick={() => setMobileOpen(false)}
+    className={({ isActive }) =>
+      `
+      mx-3
+      my-1
+      flex
+      items-center
+      rounded-xl
+      px-4
+      py-3
+      text-[15px]
+      font-medium
+      transition-all
+      duration-300
+      ${
+        isActive
+          ? `
+            bg-gradient-to-r
+            from-[#8B5E3C]
+            via-[#C89A4A]
+            to-[#8B5E3C]
+            text-white
+            shadow-md
+          `
+          : `
+            text-gray-300
+            hover:bg-[#1A1A1A]
+            hover:text-[#D4AF37]
+          `
+      }
+      `
+    }
+  >
+    {link.label}
+  </NavLink>
+))}
+          <div className="my-3 border-t border-[#2D2D2D]" />
 
-          <hr />
-
-          <button
-            onClick={() => {
-              navigate("/profile");
-              setMobileOpen(false);
-            }}
-            className="w-full flex items-center gap-3 px-5 py-4 hover:bg-gray-100"
-          >
-            <img
-  src={
-    user?.profileImage
-      ? `http://localhost:5000${user.profileImage}`
-      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-          user?.name || "User"
-        )}&background=D4AF37&color=000`
-  }
-  alt="Profile"
+         <button
+  onClick={() => {
+    navigate("/profile");
+    setMobileOpen(false);
+  }}
   className="
-    h-8
-    w-8
-    rounded-full
-    object-cover
-   
-    
-  "
-/>
-            My Profile
-          </button>
+w-full
+flex
+items-center
+justify-between
+px-4
+py-3
+rounded-xl
+text-white
+transition-all
+duration-300
+hover:bg-[#1E1E1E]
+hover:border-[#D4AF37]/30
+"
+>
+  <div className="flex items-center gap-4">
+    <div
+      className="
+      h-10
+      w-10
+      rounded-full
+      bg-gradient-to-br
+      from-[#C89A4A]
+      to-[#8B5E3C]
+      flex
+      items-center
+      justify-center
+      shadow-[0_0_18px_rgba(212,175,55,.25)]
+      "
+    >
+      <FiUser size={20} />
+    </div>
+
+    <div className="text-left">
+      <p className="font-semibold">My Profile</p>
+      <p className="text-xs text-gray-400">
+        Account & Security
+      </p>
+    </div>
+  </div>
+
+  <span className="text-gray-500 text-xl">›</span>
+</button>
 
           <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-5 py-4 text-red-600 hover:bg-red-50"
-          >
-            <FiLogOut />
-            Logout
-          </button>
+  onClick={handleLogout}
+  className="
+w-full
+flex
+items-center
+justify-between
+px-4
+py-3
+rounded-xl
+mt-2
+transition-all
+duration-300
+hover:bg-red-500/10
+"
+>
+  <div className="flex items-center gap-5">
+    <div
+      className="
+      h-9
+      w-10
+      rounded-full
+      bg-red-500/10
+      flex
+      items-center
+      justify-center
+      "
+    >
+      <FiLogOut
+        size={20}
+        className="text-red-400"
+      />
+    </div>
+
+    <div className="text-left">
+      <p className="font-semibold text-red-400">
+        Logout
+      </p>
+      <p className="text-xs text-gray-500">
+        Sign out securely
+      </p>
+    </div>
+  </div>
+</button>
 
         </div>
       )}

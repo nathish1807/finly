@@ -4,7 +4,7 @@ import PageContainer from "../../components/PageContainer/PageContainer";
 import Card from "../../components/Card/Card";
 import toast from "react-hot-toast";
 
-import SuccessScreen from "../../components/SuccessScreen";
+// import SuccessScreen from "../../components/SuccessScreen";
 import {
   getBudgets,
   createBudget,
@@ -15,7 +15,7 @@ export default function Budgets() {
   const [budgets, setBudgets] = useState([]);
   const [category, setCategory] = useState("");
   const [limit, setLimit] = useState("");
-const [showSuccess, setShowSuccess] = useState(false);
+// const [showSuccess, setShowSuccess] = useState(false);
   useEffect(() => {
     fetchBudgets();
   }, []);
@@ -36,22 +36,17 @@ const [showSuccess, setShowSuccess] = useState(false);
   }
 
   try {
-    await createBudget({
+   await createBudget({
   category,
   limit,
 });
 
-setShowSuccess(true);
-
-setTimeout(() => {
-  setShowSuccess(false);
-}, 2200);
+toast.success("Budget Added Successfully");
 
 setCategory("");
 setLimit("");
 
 fetchBudgets();
-
   } catch (error) {
 
     toast.error(
@@ -105,27 +100,27 @@ Track spending and stay within your monthly limits.
 
 </div>
 
-<div className="grid grid-cols-3 gap-5">
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
-<div className="rounded-2xl bg-[#242424]/80 p-5 text-center">
+<div className="rounded-2xl bg-[#242424]/80 p-4 sm:px-6 sm:py-4 text-center min-w-0">
 
 <p className="text-gray-400 text-sm">
 Budgets
 </p>
 
-<h2 className="text-[#D4AF37] text-2xl font-bold">
+<h2 className="text-[#D4AF37] text-xl sm:text-2xl font-bold break-words">
 {budgets.length}
 </h2>
 
 </div>
 
-<div className="rounded-2xl bg-[#242424]/80 p-5 text-center">
+<div className="rounded-2xl bg-[#242424]/80 p-4 sm:px-6 sm:py-4 text-center min-w-0">
 
 <p className="text-gray-400 text-sm">
 Spent
 </p>
 
-<h2 className="text-red-400 text-2xl font-bold">
+<h2 className="text-red-400 text-xl sm:text-2xl font-bold break-words">
 
 ₹{budgets.reduce((t,b)=>t+b.spent,0).toLocaleString()}
 
@@ -133,13 +128,13 @@ Spent
 
 </div>
 
-<div className="rounded-2xl bg-[#242424]/80 p-5 text-center">
+<div className="rounded-2xl bg-[#242424]/80 p-4 sm:px-6 sm:py-4 text-center min-w-0">
 
 <p className="text-gray-400 text-sm">
 Remaining
 </p>
 
-<h2 className="text-green-400 text-2xl font-bold">
+<h2 className="text-green-400 text-xl sm:text-2xl font-bold break-words">
 
 ₹{budgets.reduce((t,b)=>t+b.remaining,0).toLocaleString()}
 
@@ -156,7 +151,7 @@ Remaining
 
        <Card className="mb-8 rounded-3xl border border-[#D4AF37]/20 bg-[#171717] p-7 shadow-[0_25px_60px_rgba(0,0,0,.45)]">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
             <input
               type="text"
@@ -240,7 +235,7 @@ hover:shadow-[0_0_35px_rgba(212,175,55,.35)]
 💰
 </div>
 
-<h2 className="mt-4 text-2xl font-bold text-white">
+<h2 className="mt-4 text-xl sm:text-2xl font-bold break-words text-white">
 
 No Budgets Yet
 
@@ -280,7 +275,7 @@ Create your first budget to start tracking your spending.
 
                 <div className="flex justify-between items-center">
 
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-xl sm:text-2xl font-bold break-words text-white">
                     {budget.category}
                   </h2>
 
@@ -454,7 +449,7 @@ Remaining
         
 
       </PageContainer>
-      {showSuccess && (
+      {/* {showSuccess && (
 
 <SuccessScreen
 
@@ -464,7 +459,7 @@ subtitle="Your monthly budget has been created."
 
 />
 
-)}
+)} */}
     </MainLayout>
   );
 }

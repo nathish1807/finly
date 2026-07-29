@@ -11,8 +11,16 @@ import {
 
 export default function MonthlyTrendChart({ data }) {
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={data}>
+    <ResponsiveContainer width="100%" height="100%">
+      <LineChart
+  data={data}
+  margin={{
+    top: 10,
+    right: 15,
+    left: -20,
+    bottom: 20,
+  }}
+>
 
         <CartesianGrid
           stroke="#2A2A2A"
@@ -20,13 +28,17 @@ export default function MonthlyTrendChart({ data }) {
         />
 
         <XAxis
-          dataKey="month"
-          stroke="#BDBDBD"
-        />
+  dataKey="month"
+  stroke="#BDBDBD"
+  tick={{ fontSize: 11 }}
+  interval="preserveStartEnd"
+/>
 
-        <YAxis
-          stroke="#BDBDBD"
-        />
+       <YAxis
+  stroke="#BDBDBD"
+  width={40}
+  tick={{ fontSize: 11 }}
+/>
 
         <Tooltip
           contentStyle={{
@@ -43,9 +55,9 @@ export default function MonthlyTrendChart({ data }) {
           type="monotone"
           dataKey="Income"
           stroke="#22C55E"
-          strokeWidth={4}
+          strokeWidth={3}
           dot={{
-            r: 6,
+            r: 4,
           }}
         />
 
@@ -55,7 +67,7 @@ export default function MonthlyTrendChart({ data }) {
           stroke="#EF4444"
           strokeWidth={4}
           dot={{
-            r: 6,
+            r: 4,
           }}
         />
 

@@ -6,7 +6,7 @@ export default function useAutoLogout() {
 
     const logout = () => {
       localStorage.removeItem("token");
-      window.location.href = "/login";
+      window.location.href = "/";
     };
 
     const resetTimer = () => {
@@ -15,7 +15,7 @@ export default function useAutoLogout() {
       timer = setTimeout(() => {
         alert("Session expired. Please login again.");
         logout();
-      }, 10 * 60 * 1000); // 10 minutes
+      }, 15 * 60 * 1000); // 10 minutes
     };
 
     const events = [
